@@ -24,6 +24,7 @@ body{
   color:var(--color-text);
   font-size:1rem;
   background:#474747;
+  perspective-origin: 1000;
   
 }
 
@@ -41,18 +42,20 @@ body{
   -o-border-radius: 20px;
   box-sizing: border-box;
   overflow: hidden;
-  background: #000;
+
 }
 
   
  
   
 main{
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 70%;
+  min-width: 525px ;
   height: 100%;
   background: #952f57;
   
@@ -60,11 +63,14 @@ main{
 }
 
 aside{
+  position: relative;
  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 30%;
+  min-width: 300px;
+  max-width: 400px;
   height: 100%;
   min-width: 15vh;
   background: #62152d;  
@@ -85,41 +91,84 @@ aside h1{
 
 
 
-.tablero{ 
+#tablero{ 
   position: relative;
-  height:600px;
-  width: 600px;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  height:50vh;
+  width: 60vh;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(6, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-gap: 5px;
+  background: transparent;
+
   
 }
 
-.carta{
-  border: 5px solid #4b6cb7;
-  line-height: 50px;
+.tarjeta,.cara{
+  height:8vh;
+  width: 8vh;
+  border-radius: 10px;
+  min-height: 50px;
+  min-width: 50px;
+
   cursor: pointer;
   user-select: none;
-  color: #f7b32c;
   
-  border-radius: 15px;
-  -webkit-border-radius: 15px;
-  -moz-border-radius: 15px;
-  -ms-border-radius: 15px;
-  -o-border-radius: 15px;
 }
 
-.carta:hover{
-  background: #182848d3;
-  border: 1px solid #4b6cb7;
-  background-position: center;
-background-size: cover;}
-
-  .carta .active{
-    background: rgba(255, 255, 255, 0.473);
+.tarjeta{
+  position: relative;
+  transform-style: preserve-3d;
+  transition:0.5s ;
+  -webkit-transition:0.5s ;
+  -moz-transition:0.5s ;
+  -ms-transition:0.5s ;
+  -o-transition:0.5s ;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  box-shadow: #000 0px 0px 3px 2px;
+}
+.cara{
+  position: absolute;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  font-size: 2rem;
+  line-height:8vh;
+  text-align: center;
+}
+.trasera{
+  transform: rotateY(180deg);
+  background: #fbf7f5d2;
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -ms-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+  color: #000;
+  
+}
+.frontal{
+  transform: rotateY(0deg);
+  background: #97b74b;
+  color: #000;
+  line-height: 8vh;
+  text-align: center;
+  font-size: 1rem;
+  -webkit-transform: rotateY(0deg);
+  -moz-transform: rotateY(0deg);
+  -ms-transform: rotateY(0deg);
+  -o-transform: rotateY(0deg);
 }
 
-button{
+/*.tarjeta:hover{
+  transform: rotateY(180deg);
+}*/   
+
+
+#startButton{
   background: #97b74b;
   border: none;
   height: 50px;
@@ -134,8 +183,9 @@ button{
   -ms-border-radius: 25px;
   -o-border-radius: 25px;
   box-shadow: 3px 3px 5px #000;
+  overflow: hidden;
 }
-button:hover{
+#startButton:hover{
   background: #182848d3;
   box-shadow: 3px 3px 5px #000;
 }
