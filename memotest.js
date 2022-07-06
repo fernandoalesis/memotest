@@ -3,11 +3,9 @@
 //init variables
 
 let emojiList=['🐶','🐱','🐭','🐹','🐰','🦊','🐼','🐨','🐯','🦁','🐮','🐷','🐸','🐵','🐔','🐶','🐱','🐭','🐹','🐰','🦊','🐼','🐨','🐯','🦁','🐮','🐷','🐸','🐵','🐔']
-
 let startButton=document.getElementById('startButton');
-
 let tablero=document.getElementById('tablero');
-
+let modal=document.getElementById('modal');
 let tarjeta=document.getElementsByClassName('tarjeta');
 let ArrayTablero= [];
 let ArrayTarjeta=Array.from(tarjeta);
@@ -17,27 +15,36 @@ let contadorCartasActive=0;
 let primeraCarta='';
 let segundaCarta='';
 let aciertos=0;
+let intentos=0;
+
+//
+
+//Functions
+
+borrarTablero=()=>{
+    ArrayTarjeta.length=0;
+    ArrayTablero.length=0;
+    aciertos=0;
+    intentos=0;    
+}
 
 verificarFinJuego=()=>{
     if(aciertos==15){
-        tarjeta.style.animation='rotar 5s ease-in-out';
-        startButton.style.display='';
-    }
-}
-
-    pintarAciertos=()=>{}
-
-
-
-
+        tablero.innerHTML='';
+        tablero.appendChild(document.createElement('h1'));
+        tablero.children[0].innerHTML=`<h1>Felicidades, has ganado! con solo ${intentos} intentos</h1>`;
+        startButton.style.display='block';
+         borrarTablero();
+    }}
 
 mezclarCartas=()=>{
+    copyEmojiList=[...emojiList];
     for(let i=0;i<caraTrasera.length;i++){
-        let random=Math.floor(Math.random()*emojiList.length);
-        caraTrasera[i].innerHTML=emojiList[random];
-        emojiList.splice(random,1);
-    }
-}
+        let random=Math.floor(Math.random()*copyEmojiList.length);
+        caraTrasera[i].innerHTML=copyEmojiList[random];
+        copyEmojiList.splice(random,1);
+        }}
+
 verificarCoincidencia=(a,b)=>{
     if(a.innerText!==b.innerText){
         setTimeout(()=>{
@@ -52,113 +59,59 @@ verificarCoincidencia=(a,b)=>{
         a.classList.remove('active');
         b.classList.remove('active');
         aciertos++;
-        pintarAciertos();
-        verificarFinJuego();
-        console.log(aciertos);
-        console.log(a.classList);
-        console.log(b.classList);
-    }
-    
-
-}
+        document.getElementsByClassName('aciertos')[0].innerHTML=`Aciertos:<div className:'cuadroCont'><span>${aciertos}</span></div>`;
+        verificarFinJuego();  
+    }}
 
 verificarCartas=(element)=>{
     if(contadorCartasActive===1){
         primeraCarta=element;
         return;
     }
-   
     if(contadorCartasActive===2){
         segundaCarta=element;
-        contadorCartasActive=0;
+        contadorCartasActive=0;    
+        intentos++;
+        document.getElementsByClassName('intentos')[0].innerHTML=`Intentos:<div className:'cuadroCont'><span>${intentos}</span></div>  `;
         verificarCoincidencia(primeraCarta,segundaCarta);
         return;
-        
-        }
-    
-    }
-    
-   
+    }}
 
 crearCartas=()=>{
-    
     mezclarCartas();
-
     ArrayTablero.forEach(element => {
-        
-      
         element.addEventListener('click', () => { 
-            //check si la carta esta activa o descubierta
             if(element.classList.contains('active')||element.classList.contains('match')){
                 return;
             }else{ element.style.transform='rotateY(180deg)';  
                     element.classList.add('active');
                     contadorCartasActive++;
-                    verificarCartas(element)}
-                   
-            
-           
-            
-        });
-})
+                    verificarCartas(element)}});
+});
 };
 
-
-
-
 crearTablero=()=>{
-    ArrayTablero=[];
-    
-  
+    if (aciertos!==15&&ArrayTarjeta.length==0){
     for (let i = 0; i<30; i++) {
-
        const carta=document.createElement('div');
             carta.classList.add('tarjeta');
             tablero.appendChild(carta);
             tablero.children[i].innerHTML=`<div class="cara frontal">?</div><div class="cara trasera">${emojiList[i]}</div>`;
-        setTimeout(()=>{
-             
-            
-            
             ArrayTablero.push(tablero.children[i]);
-            ArrayTablero= [...tablero.children];
+            ArrayTablero= [...tablero.children];}
 
-        
-    },1000)
-
-        
-            
-            
-      }
-     
-    
-   
-    
-    console.log(ArrayTablero);
-    crearCartas()
-
-
-    }
-
-
-    
-    
-
-    
-
-
-
-    
-
-
+        crearCartas();
+    }}
+//
 
 //start game
 
 startButton.addEventListener('click',()=>{
-    if (ArrayTablero.length===0){
-        crearTablero();
-        aciertos=0;
-        startButton.style.display='none';
-    }
+    tablero.innerHTML='';
+    document.getElementsByClassName('aciertos')[0].innerHTML='';
+    document.getElementsByClassName('intentos')[0].innerHTML='';
+    startButton.style.display='none';
+    crearTablero();
     }
     );
+//
