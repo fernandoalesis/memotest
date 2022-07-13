@@ -31,8 +31,8 @@ borrarTablero=()=>{
 verificarFinJuego=()=>{
     if(aciertos==15){
         tablero.innerHTML='';
-        tablero.appendChild(document.createElement('h1'));
-        tablero.children[0].innerHTML=`<h1>Felicidades, has ganado! con solo ${intentos} intentos</h1>`;
+        tablero.appendChild(document.createElement('div'));
+        tablero.children[0].innerHTML=`<div><h1>Felicidades, has ganado! y con solo ${intentos} intentos</h1><div>`;
         startButton.style.display='block';
          borrarTablero();
     }}
