@@ -208,7 +208,7 @@ aside h1{
   text-align: center;
   border: 1px solid #000;
   box-sizing: border-box;
-  background: #a0a0a0;
+ 
 
   
 }
@@ -363,12 +363,7 @@ aside h1{
    
     
   }
-  /*
-  ajustar tamano font size cara frontal y trasera
-  ajustar posicion footer y su margin-top
-  ajustar tamanos de letra h1 en px
-  */
-
+  
   
 }
 
@@ -387,14 +382,5 @@ aside h1{
 
     line-height: 60px;
   }
-  /*
-  ajustar tamano font size cara frontal y trasera
-  ajustar posicion footer y su margin-top
-  ajustar tamanos de letra h1 en px
-  ajustar tamano tablero por aumento de gap dth
-  */
-
-  */
   
-  */
 }
